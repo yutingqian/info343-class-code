@@ -1,6 +1,7 @@
 /**
  * application script for the states.html
  */
+<<<<<<< HEAD
 
 document.addEventListener('DOMContentLoaded', function() {
     'use strict';
@@ -28,3 +29,5 @@ document.addEventListener('DOMContentLoaded', function() {
     var statesUl = document.getElementById('states-list');
     addStates(usaStates, statesUl);
 });
+=======
+>>>>>>> 42ac3daf88f8ba057fb7a658bf6a5beac54e65bc
