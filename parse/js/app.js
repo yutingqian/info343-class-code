@@ -82,6 +82,8 @@ $(function() {
         //save the new task to your Parse database
         //if save is successful, fetch the tasks again
         //otherwise display the error
+        //regardless, clear the title input
+        //so the user can enter the next new task
         task.save()
             .then(fetchTasks, displayError)
             .then(function() {
