@@ -20,6 +20,10 @@ footer {
     font-size: 0.8em;
 }
 
+tfoot {
+    font-size: 0.8em;
+}
+
 input.ng-dirty.ng-valid {
     border: 1px solid #00DD00;
 }

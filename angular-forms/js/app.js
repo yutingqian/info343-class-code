@@ -2,15 +2,10 @@
     script file for the index.html page
 */
 
-angular.module('ContactsApp', ['ui.router', 'angular-uuid'])
+angular.module('ContactsApp', ['ui.router', 'angular-uuid', 'LocalStorageModule'])
     .constant('contactsListKey', 'contacts-list')
-    .factory('contacts', function(contactsListKey) {
-        return angular.fromJson(localStorage.getItem(contactsListKey)) || [];
-    })
-    .factory('saveContacts', function(contactsListKey) {
-        return function(contacts) {
-            localStorage.setItem(contactsListKey, angular.toJson(contacts));
-        }
+    .factory('contacts', function(contactsListKey, localStorageService) {
+        return localStorageService.get(contactsListKey) || [];
     })
     .config(function($stateProvider, $urlRouterProvider) {
         $stateProvider
@@ -57,7 +52,8 @@ angular.module('ContactsApp', ['ui.router', 'angular-uuid'])
     .controller('ContactsController', function($scope, contacts) {
         $scope.contacts = contacts;
     })
-    .controller('ContactDetailController', function($scope, $stateParams, $state, contacts, saveContacts) {
+    .controller('ContactDetailController', function($scope, $stateParams, $state, contacts,
+                                                    localStorageService, contactsListKey) {
         $scope.contact = contacts.find(function(contact) {
             return contact.id === $stateParams.id;
         });
@@ -71,12 +67,13 @@ angular.module('ContactsApp', ['ui.router', 'angular-uuid'])
                 contacts.splice(idx, 1);
             }
 
-            saveContacts(contacts);
+            localStorageService.set(contactsListKey, contacts);
 
             $state.go('list');
         };
     })
-    .controller('EditContactController', function($scope, $stateParams, $state, contacts, saveContacts, uuid) {
+    .controller('EditContactController', function($scope, $stateParams, $state, contacts, uuid,
+                                                  localStorageService, contactsListKey) {
         var existingContact = contacts.find(function(contact) {
             return contact.id === $stateParams.id;
         });
@@ -92,7 +89,7 @@ angular.module('ContactsApp', ['ui.router', 'angular-uuid'])
                 contacts.push($scope.contact);
             }
 
-            saveContacts(contacts)
+            localStorageService.set(contactsListKey, contacts);
             $state.go('list');
         };
     });
