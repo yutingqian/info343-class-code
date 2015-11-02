@@ -1,6 +1,6 @@
 body {
     font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 300;
 }
 
@@ -35,4 +35,10 @@ input.ng-dirty.ng-invalid {
 .validation-error {
     color: #DD0000;
     font-size: 0.8em;
+}
+
+@media (min-width: 768px) {
+    body {
+        font-size: 18px;
+    }
 }

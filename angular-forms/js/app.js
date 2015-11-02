@@ -2,10 +2,10 @@
     script file for the index.html page
 */
 
-angular.module('ContactsApp', ['ui.router', 'angular-uuid', 'LocalStorageModule'])
-    .constant('contactsListKey', 'contacts-list')
-    .factory('contacts', function(contactsListKey, localStorageService) {
-        return localStorageService.get(contactsListKey) || [];
+angular.module('ContactsApp', ['ui.router', 'firebase'])
+    .constant('firebaseUrl', 'https://info343addr.firebaseio.com/contacts')
+    .factory('contacts', function($firebaseArray, firebaseUrl) {
+        return $firebaseArray(new Firebase(firebaseUrl));
     })
     .config(function($stateProvider, $urlRouterProvider) {
         $stateProvider
@@ -52,44 +52,34 @@ angular.module('ContactsApp', ['ui.router', 'angular-uuid', 'LocalStorageModule'
     .controller('ContactsController', function($scope, contacts) {
         $scope.contacts = contacts;
     })
-    .controller('ContactDetailController', function($scope, $stateParams, $state, contacts,
-                                                    localStorageService, contactsListKey) {
-        $scope.contact = contacts.find(function(contact) {
-            return contact.id === $stateParams.id;
-        });
+    .controller('ContactDetailController', function($scope, $stateParams, $state, $firebaseObject, firebaseUrl) {
+        $scope.contact = $firebaseObject(new Firebase(firebaseUrl + '/' + $stateParams.id));
 
         $scope.deleteContact = function() {
-            var idx = contacts.findIndex(function(contact) {
-                return contact.id === $scope.contact.id;
+            $scope.contact.$remove().then(function() {
+                $state.go('list');
             });
-
-            if (idx >= 0) {
-                contacts.splice(idx, 1);
-            }
-
-            localStorageService.set(contactsListKey, contacts);
-
-            $state.go('list');
         };
     })
-    .controller('EditContactController', function($scope, $stateParams, $state, contacts, uuid,
-                                                  localStorageService, contactsListKey) {
-        var existingContact = contacts.find(function(contact) {
-            return contact.id === $stateParams.id;
-        });
-
-        $scope.contact = angular.copy(existingContact);
+    .controller('EditContactController', function($scope, $stateParams, $state, $firebaseObject, firebaseUrl, contacts) {
+        if ('new' === $stateParams.id) {
+            $scope.contact = {}
+        }
+        else {
+            $scope.contact = $firebaseObject(new Firebase(firebaseUrl + '/' + $stateParams.id));
+        }
 
         $scope.saveContact = function() {
-            if (existingContact) {
-                angular.copy($scope.contact, existingContact);
+            var prom;
+            if ($scope.contact.$id) {
+                prom = $scope.contact.$save();
             }
             else {
-                $scope.contact.id = uuid.v4();
-                contacts.push($scope.contact);
+                prom = contacts.$add($scope.contact);
             }
 
-            localStorageService.set(contactsListKey, contacts);
-            $state.go('list');
+            prom.then(function() {
+                $state.go('list');
+            });
         };
     });
