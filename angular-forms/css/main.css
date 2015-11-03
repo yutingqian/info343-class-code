@@ -20,6 +20,7 @@ footer {
     font-size: 0.8em;
 }
 
+<<<<<<< HEAD
 tfoot {
     font-size: 0.8em;
 }
@@ -30,3 +31,8 @@ tfoot {
     }
 }
 
+=======
+tfoot td {
+    font-size: 0.8em;    
+}
+>>>>>>> c86ea5e07396a6f176cb977fd1425aef832f8dae
