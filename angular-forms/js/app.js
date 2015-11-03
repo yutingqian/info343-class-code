@@ -52,27 +52,24 @@ angular.module('ContactsApp', ['ui.router', 'firebase'])
     .controller('ContactsController', function($scope, contacts) {
         $scope.contacts = contacts;
     })
-    .controller('ContactDetailController', function($scope, $stateParams, $state, $firebaseObject, firebaseUrl) {
-        $scope.contact = $firebaseObject(new Firebase(firebaseUrl + '/' + $stateParams.id));
+    .controller('ContactDetailController', function($scope, $stateParams, $state, contacts) {
+        contacts.$loaded().then(function() {
+            $scope.contact = contacts.$getRecord($stateParams.id);
+        });
 
         $scope.deleteContact = function() {
-            $scope.contact.$remove().then(function() {
+            contacts.$remove($scope.contact).then(function() {
                 $state.go('list');
             });
         };
     })
-    .controller('EditContactController', function($scope, $stateParams, $state, $firebaseObject, firebaseUrl, contacts) {
-        if ('new' === $stateParams.id) {
-            $scope.contact = {}
-        }
-        else {
-            $scope.contact = $firebaseObject(new Firebase(firebaseUrl + '/' + $stateParams.id));
-        }
+    .controller('EditContactController', function($scope, $stateParams, $state, contacts) {
+        $scope.contact = contacts.$getRecord($stateParams.id);
 
         $scope.saveContact = function() {
             var prom;
             if ($scope.contact.$id) {
-                prom = $scope.contact.$save();
+                prom = contacts.$save($scope.contact);
             }
             else {
                 prom = contacts.$add($scope.contact);
