@@ -1,23 +1,22 @@
 <p class="pull-right">
-    <a ui-sref="list" class="btn btn-default">Back</a>
     <button class="btn btn-danger" ng-click="deleteContact()">Delete</button>
-    <a class="btn btn-primary" ng-href="#/contacts/{{contact.id}}/edit">Edit</a>
+    <a class="btn btn-primary" ui-sref="edit({id: contact.$id})">Edit</a>
 </p>
 <h1>{{contact.fname}} {{contact.lname}}</h1>
 
 <div class="row">
-    <div class="col-xs-2">
+    <div class="col-sm-2">
         phone:
     </div>
-    <div class="col-xs-10">
+    <div class="col-sm-10">
         <a ng-href="tel:{{contact.phone}}">{{contact.phone}}</a>
     </div>
 </div>
 <div class="row">
-    <div class="col-xs-2">
+    <div class="col-sm-2">
         date of birth:
     </div>
-    <div class="col-xs-10">
+    <div class="col-sm-10">
         {{contact.dob}}
     </div>
 </div>
