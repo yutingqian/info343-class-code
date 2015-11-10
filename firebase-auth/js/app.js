@@ -68,6 +68,8 @@ angular.module('ChatApp', ['firebase'])
                 .then(function() {
                     //after the add is done, clear the body field
                     $scope.body = null;
+                    //and any error
+                    $scope.error = null;
                 })
                 .catch(function(err) {
                     console.error(err);
