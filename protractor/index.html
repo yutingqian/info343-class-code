@@ -29,7 +29,7 @@
         <main class="container" ng-controller="TasksController">
             <h1>My Tasks</h1>
 
-            <form name="newTaskForm" ng-submit="addTask()">
+            <form name="newTaskForm" ng-submit="addTask()" novalidate>
                 <div class="form-group">
                     <input type="text"
                            name="titleInp"
