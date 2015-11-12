@@ -2,3 +2,15 @@ body {
     font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 18px;
 }
+
+form .ng-touched.ng-invalid {
+    border: 1px solid #DD0000;
+}
+
+form .ng-touched.ng-valid {
+    border: 1px solid #00DD00;
+}
+
+.validation-error {
+    color: #DD0000;
+}

@@ -38,6 +38,10 @@
                            placeholder="new task title"
                            autofocus
                            required/>
+                    <p class="validation-error title-required-error"
+                       ng-if="newTaskForm.titleInp.$touched && newTaskForm.titleInp.$error.required">
+                        please enter a task title
+                    </p>
 
                 </div>
                 <div class="form-group">
