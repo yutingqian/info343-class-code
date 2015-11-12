@@ -16,13 +16,8 @@ form .ng-dirty.ng-valid {
     font-size: 0.8em;
 }
 
-.tasks {
-    padding-left: 0;
-}
-
 .tasks li {
     cursor: pointer;
-    list-style: none;
 }
 
 .tasks li:hover {

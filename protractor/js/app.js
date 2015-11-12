@@ -16,4 +16,17 @@ angular.module('TasksApp', [])
         $scope.toggleDone = function(task) {
             task.done = !task.done;
         };
+
+        $scope.areCompleted = function() {
+            var firstDoneTask = $scope.tasks.findIndex(function(task) {
+                return task.done === true;
+            });
+            return firstDoneTask >= 0;
+        };
+
+        $scope.purgeCompleted = function() {
+            $scope.tasks = $scope.tasks.filter(function(task) {
+                return !task.done;
+            });
+        };
     });
