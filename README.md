@@ -25,7 +25,7 @@ $ git pull upstream master
 
 The last command will typically trigger a merge commit and put you into the nano editor to confirm the commit message. Hit `ctrl+x` to exit the editor and return to the command prompt.
 
- ## On Your Own Laptop?
+## On Your Own Laptop?
 
  If you are on your own laptop, you should do these commands only once:
 
