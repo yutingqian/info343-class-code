@@ -10,8 +10,10 @@ angular.module('TasksApp', [])
         $scope.addTask = function() {
             $scope.tasks.push($scope.newTask);
             $scope.newTask = {};
-            $scope.newTaskForm.titleInp.$setUntouched();
             $scope.newTaskForm.titleInp.$setPristine();
         };
 
+        $scope.toggleDone = function(task) {
+            task.done = !task.done;
+        };
     });

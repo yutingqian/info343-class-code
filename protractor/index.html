@@ -39,7 +39,7 @@
                            autofocus
                            required/>
                     <p class="validation-error title-required-error"
-                       ng-if="newTaskForm.titleInp.$touched && newTaskForm.titleInp.$error.required">
+                       ng-if="newTaskForm.titleInp.$dirty && newTaskForm.titleInp.$error.required">
                         please enter a task title
                     </p>
 
@@ -49,8 +49,12 @@
                 </div>
             </form>
 
-            <ul>
-                <li ng-repeat="task in tasks">{{task.title}}</li>
+            <ul class="tasks">
+                <li ng-repeat="task in tasks"
+                    ng-class="{'completed-task': task.done}"
+                    ng-click="toggleDone(task)">
+                    {{task.title}}
+                </li>
             </ul>
         </main>
     </body>
